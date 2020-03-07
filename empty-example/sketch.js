@@ -1,112 +1,66 @@
-var prn = [];
-let greeting;
-let s;
-let x;
-var input;
-var mc1 = "";
+let board = [
+  ['', '', ''],
+  ['', '', ''],
+  ['', '', '']
+];
+
+let players = ['X', 'O'];
+
+let currentPlayer;
+let available = [];
 
 function setup() {
   createCanvas(400, 400);
-  input = createInput();
-  input.position(20, 65);
-  input.changed(newText);
-
-//   greeting = createElement('h2', 'Enter Text');
-//   greeting.position(20, 5);
-}
-
-
-function morseEncode(x) {
-  //console.log("char entered is ", x);
-  switch (x) {
-    case 'a':
-      return ".-";
-    case 'b':
-      return "-...";
-    case 'c':
-      return "-.-.";
-    case 'd':
-      return "-..";
-    case 'e':
-      return ".";
-    case 'f':
-      return "..-.";
-    case 'g':
-      return "--.";
-    case 'h':
-      return "....";
-    case 'i':
-      return "..";
-    case 'j':
-      return ".---";
-    case 'k':
-      return "-.-";
-    case 'l':
-      return ".-..";
-    case 'm':
-      return "--";
-    case 'n':
-      return "-.";
-    case 'o':
-      return "---";
-    case 'p':
-      return ".--.";
-    case 'q':
-      return "--.-";
-    case 'r':
-      return ".-.";
-    case 's':
-      return "...";
-    case 't':
-      return "-";
-    case 'u':
-      return "..-";
-    case 'v':
-      return "...-";
-    case 'w':
-      return ".--";
-    case 'x':
-      return "-..-";
-    case 'y':
-      return "-.--";
-      // for space 
-    case 'z':
-      return "--..";
-    case ' ':
-      return " ";
-
-  }
-  return 0;
-}
-
-
-
-
-function newText() {
-  console.log(input.value());
-  s = input.value();
-  morsecode(s);
-}
-
-function morsecode(s) {
-  for (var i = 0; i < s.length; i++) {
-    //console.log('size  ' + s.length);
-    print(morseEncode((s[i])));
-    // prn.push(morseEncode((s[i])));
-    
-    fill(255);
-    textSize(32);
-    text("word", 200, 200);
-    // word = createElement('p', 'word');
-    // word.position(200, 200);
-
-    //text(40, 40, 40); |
-  }
 }
 
 function draw() {
-  background(50);
-  fill(255);
-  text(prn, 200, 200)
-  // text("asd", 200, 200);
+  background(255);
+  let w = width / 3;
+  let h = height / 3;
+  strokeWeight(4);
+
+  line(w, 0, w, height);
+  line(w * 2, 0, w * 2, height);
+  line(0, h, width, h);
+  line(0, h * 2, width, h * 2);
+
+  function mouseclick(){}
+  
+  function equals3(a, b, c) {
+  return a == b && b == c && a != '';
 }
+
+function checkWinner() {
+  let winner = null;
+
+  // horizontal
+  for (let i = 0; i < 3; i++) {
+    if (equals3(board[i][0], board[i][1], board[i][2])) {
+      winner = board[i][0];
+    }
+  }
+
+  // Vertical
+  for (let i = 0; i < 3; i++) {
+    if (equals3(board[0][i], board[1][i], board[2][i])) {
+      winner = board[0][i];
+    }
+  }
+
+  // Diagonal
+  if (equals3(board[0][0], board[1][1], board[2][2])) {
+    winner = board[0][0];
+  }
+  if (equals3(board[2][0], board[1][1], board[0][2])) {
+    winner = board[2][0];
+  }
+
+  if (winner == null && available.length == 0) {
+    return 'tie';
+  } else {
+    return winner;
+  }
+}
+  
+  
+    }
