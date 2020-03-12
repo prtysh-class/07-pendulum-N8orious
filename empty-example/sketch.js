@@ -1,66 +1,86 @@
-let board = [
-  ['', '', ''],
-  ['', '', ''],
-  ['', '', '']
-];
+var ship;
+var enemy = [];
+var bullets = [];
 
-let players = ['X', 'O'];
+class Enemy
+{
+constructor(_pos, _vel)
+  {
+    this.vel = _vel;
+    this.pos = _pos;
+}
+  show() {
+ 
+    circle( this.pos.x, this.pos.y, 100);
+         }
 
-let currentPlayer;
-let available = [];
+  move() {
+   
+ }
+
+  death() {
+  
+}
+  
+  bulletcollision() {
+    
+  }
+  
+  class Bullet{
+  constructor(_pos, _vel) {
+    this.pos = _pos;
+    this.vel = _vel;
+    this.timer = millis();
+    this.radius = 3;
+  }
+  show() {
+    circle(this.pos.x, this.pos.y, this.radius * 2);
+  }
+  move() {
+    this.pos.add(this.vel);
+  }
+  death() {
+    if (millis() - this.timer > 5000) {
+      bullets.shift();
+    }
+  }
+  
+  class Ship {
+  constructor(_pos, _vel,) {
+    this.pos = _pos;
+    this.vel = _vel;
+  }
+  show() {
+    stroke(255);
+    strokeWeight(3);
+    let x1 = this.pos.x;
+    let y1 = this.pos.y;
+    let x2 = this.pos.x + 5 * this.vel.copy().normalize().x;
+    let y2 = this.pos.y + 5 * this.vel.copy().normalize().y;
+    line(x1, y1, x2, y2);
+  }
+  
+  
+  }
+
+
+
+
+
 
 function setup() {
   createCanvas(400, 400);
 }
 
 function draw() {
-  background(255);
-  let w = width / 3;
-  let h = height / 3;
-  strokeWeight(4);
-
-  line(w, 0, w, height);
-  line(w * 2, 0, w * 2, height);
-  line(0, h, width, h);
-  line(0, h * 2, width, h * 2);
-
-  function mouseclick(){}
+  background(1);
   
-  function equals3(a, b, c) {
-  return a == b && b == c && a != '';
+  let x = width/2;
+  let y = height/2;
+  
+  
 }
-
-function checkWinner() {
-  let winner = null;
-
-  // horizontal
-  for (let i = 0; i < 3; i++) {
-    if (equals3(board[i][0], board[i][1], board[i][2])) {
-      winner = board[i][0];
-    }
-  }
-
-  // Vertical
-  for (let i = 0; i < 3; i++) {
-    if (equals3(board[0][i], board[1][i], board[2][i])) {
-      winner = board[0][i];
-    }
-  }
-
-  // Diagonal
-  if (equals3(board[0][0], board[1][1], board[2][2])) {
-    winner = board[0][0];
-  }
-  if (equals3(board[2][0], board[1][1], board[0][2])) {
-    winner = board[2][0];
-  }
-
-  if (winner == null && available.length == 0) {
-    return 'tie';
-  } else {
-    return winner;
-  }
-}
-  
-  
+    function KeyPressed() {
+      // left arrow and right arrow for ship
+      // space for bullets
     }
